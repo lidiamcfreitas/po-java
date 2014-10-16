@@ -36,4 +36,7 @@ public class MagicLamp{
         _rubs = 0;
         _demons++;
     }
+    
+    
+    
 }
