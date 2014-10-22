@@ -1,10 +1,11 @@
 import java.util.Iterator;
 
-public class TableIterator implements Iterable<Integer>
+public class TableIterator implements Iterable
 {
 
     private int _vector[];
     private int _size;
+    
     public TableIterator(int size){
     	_size = size;
         _vector = new int[size];
