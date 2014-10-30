@@ -4,6 +4,9 @@ import java.util.TreeMap;
 public class CatRegistry {
 
     private Map<String, Cat> _registry = new TreeMap<String, Cat>();
+    
+    public class ExistingCat extends Exception{}
+    public class NoSuchCat extends Exception{}
 
     public Cat get(String name) throws NoSuchCat{
         if(_registry.get(name)==null)
@@ -13,15 +16,18 @@ public class CatRegistry {
     
     public void put(Cat cat) throws ExistingCat
     {
+        boolean sucess = false;
         try{
             get(cat.getName());
         } catch(NoSuchCat exception){
-            _registry.put(cat.getName(), cat);
-        } finally
-        {
-            if (_registry.get(cat.getName())==null)
-                throw new ExistingCat();
+            sucess = true;
+            
         }
+        if (sucess)
+            _registry.put(cat.getName(), cat);
+        else
+            throw new ExistingCat();
+
     }
 
 
@@ -34,8 +40,20 @@ public class CatRegistry {
         
         registry.put(c1);
         registry.put(c2);
-        registry.put(c1);
+        try{
+            registry.put(c1);}
+        catch(ExistingCat e){
+            System.out.println("Pantufa already exists");
+        }
+        
         registry.get("Pantufa");
+        
+        try{
+            registry.get("Garfield");}
+        catch(NoSuchCat e){
+            System.out.println("Garfield doesn't exist");
+        }
+        
         
         System.out.println(c1);
         System.out.println(c2);
