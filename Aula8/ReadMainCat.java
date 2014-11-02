@@ -1,30 +1,52 @@
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class ReadMainCat {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException , EOFException,  UTFDataFormatException {
         
         try{
             
-        Cat cat = new Cat(9, 4.5, "Garfield");
-        
-        DataOutputStream _catData = new DataOutputStream(new BufferedOutputStream( new FileOutputStream("raw.dat")));
-        
-        _catData.writeInt(cat.getAge());
-        _catData.writeDouble(cat.getWeight());
-        _catData.writeUTF(cat.getName());
-        
-        _catData.close();
+            Cat cat = new Cat(9, 4.5, "Garfield");
             
-        } catch(IOException e) {
-            System.out.println("IO Exception");
+            DataOutputStream _catDataOutput = new DataOutputStream(new BufferedOutputStream( new FileOutputStream("raw.dat")));
+            
+            _catDataOutput.writeInt(cat.getAge());
+            _catDataOutput.writeDouble(cat.getWeight());
+            _catDataOutput.writeUTF(cat.getName());
+            
+            _catDataOutput.close();
+            
+        }
+        catch(EOFException e) {
+            System.out.println("EOFException");
+        }
+        catch(UTFDataFormatException e) {
+            System.out.println("UTFDataFormatException");
+        }
+        catch(IOException e) {
+            System.out.println("IOException");
         }
         
+        try {
         
+            DataInputStream _catDataInput = new DataInputStream(new BufferedInputStream(new FileInputStream("raw.dat")));
+            
+            System.out.println(_catDataInput.readInt());
+            System.out.println(_catDataInput.readDouble());
+            System.out.println(_catDataInput.readUTF());
+            
+            _catDataInput.close();
+            
+        }
+        catch(EOFException e) {
+            System.out.println("EOFException");
+        }
+        catch(UTFDataFormatException e) {
+            System.out.println("UTFDataFormatException");
+        }
+        catch(IOException e) {
+            System.out.println("IOException");
+        }
+    
     }
-    
-    
 }
