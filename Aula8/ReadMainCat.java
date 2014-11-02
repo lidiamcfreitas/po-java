@@ -7,6 +7,8 @@ public class ReadMainCat {
 
     public static void main(String[] args) throws IOException {
         
+        try{
+            
         Cat cat = new Cat(9, 4.5, "Garfield");
         
         DataOutputStream _catData = new DataOutputStream(new BufferedOutputStream( new FileOutputStream("raw.dat")));
@@ -16,6 +18,10 @@ public class ReadMainCat {
         _catData.writeUTF(cat.getName());
         
         _catData.close();
+            
+        } catch(IOException e) {
+            System.out.println("IO Exception");
+        }
         
         
     }
